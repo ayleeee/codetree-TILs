@@ -1,9 +1,14 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 int n,r,c;
 int grid[201][201];
 int temp[201][201];
+
+bool InRange(int x, int y, int r, int c, int bomb){
+    return (x==r||y==c)&&abs(x-r)+abs(y-c)<bomb;
+}
 
 int main(){
     ios::sync_with_stdio(false);
@@ -24,22 +29,13 @@ int main(){
     
     
     int bomb = grid[r][c];
-    bomb--;
     
     for(int i=0;i<n;i++){
         for(int j=0;j<n;j++){
-            if(i==r && j==c){
+            if(InRange(i, j, r, c, bomb)){
                 grid[i][j]=0;
             }
         }
-    }
-
-    for(int i=0;i<=bomb;i++){
-        if(r-i<0 || c-i<0) continue;
-        grid[r+i][c]=0;
-        grid[r-i][c]=0;
-        grid[r][c+i]=0;
-        grid[r][c-i]=0;
     }
     
     for(int col=0;col<n;col++){
